@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan("com.wbb.mybatisplus.mapper")
-@ComponentScan("com.git ")
+@ComponentScan("com.wbb")
 public class MybatisPlusApplication {
 
 	public static void main(String[] args) {
