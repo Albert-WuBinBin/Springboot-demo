@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Springboot-demo.iml" filepath="$PROJECT_DIR$/.idea/Springboot-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redisqueue/redisqueue.iml" filepath="$PROJECT_DIR$/redisqueue/redisqueue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-demo.iml" filepath="$PROJECT_DIR$/springboot-demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/swagger2-oauth2/swagger2-oauth2.iml" filepath="$PROJECT_DIR$/swagger2-oauth2/swagger2-oauth2.iml" />
     </modules>
   </component>

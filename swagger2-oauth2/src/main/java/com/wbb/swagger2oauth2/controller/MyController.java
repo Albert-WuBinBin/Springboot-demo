@@ -1,6 +1,7 @@
 package com.wbb.swagger2oauth2.controller;
 
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,16 +14,15 @@ public class MyController {
     public Object test(){
         return "test";
     }
-    @RequestMapping(value = "/test2",method = RequestMethod.GET)
-    public Object test2(){
-        return "test2";
+    @RequestMapping(value = "/user",method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ROLE_USER')")
+    public Object user(){
+        return "user";
     }
-    @RequestMapping(value = "/test3",method = RequestMethod.GET)
-    public Object test3(){
-        return "test3";
-    }
-    @RequestMapping(value = "/test4",method = RequestMethod.GET)
-    public Object test4(){
-        return "test4";
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @RequestMapping(value = "/admin",method = RequestMethod.GET)
+    public Object admin(){
+        return "admin";
     }
 }
