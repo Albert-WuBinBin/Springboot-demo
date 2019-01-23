@@ -40,7 +40,8 @@ public class MyUserDetailsService implements UserDetailsService {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         List<UserPermissionDO> userPermissionDOs = userPermissionMapper.selectByUserId(userDO.getId());
         for(UserPermissionDO userPermissionDO:userPermissionDOs){
-            //这个权限牵涉到底层的投票机制，RoleVoter  默认角色名以 "ROLE_" 为前缀
+            //这个权限牵涉到底层的投票机制，默认是一票制AffirmativeBased：如果有任何一个投票器运行访问，请求将被立刻允许，而不管之前可能有的拒绝决定
+            // RoleVoter投票器识别以"ROLE_"为前缀的role,这里配置已ROLE_前缀开头的role
             authorities.add(new SimpleGrantedAuthority("ROLE_"+userPermissionDO.getRoleName()));
         }
         return new User(username,passwordEncoder.encode(userDO.getPassword()),authorities);
