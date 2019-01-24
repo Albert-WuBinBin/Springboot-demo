@@ -7,12 +7,18 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 
 @Configuration
 @EnableResourceServer
+/**
+ * 这里设置访问路径权限
+ */
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter{
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.requestMatchers().antMatchers("/test/**")
-                .and().authorizeRequests().antMatchers("/test/**")
-                .authenticated();
+        http.authorizeRequests()
+                .antMatchers("/admin/**").hasRole("ADMIN")          //默认加上前缀ROLE_,目前原因未知
+                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
+                .antMatchers("/test").authenticated()
+                .anyRequest().authenticated();
     }
+
 }

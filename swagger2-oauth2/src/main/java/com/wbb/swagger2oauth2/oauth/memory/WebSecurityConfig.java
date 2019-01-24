@@ -20,7 +20,7 @@
 /**
  * 使用内存模式配置用户
  */
-//public class SecurityConfig extends WebSecurityConfigurerAdapter {
+//public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //    @Override
 //    protected UserDetailsService userDetailsService(){

@@ -22,7 +22,10 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+/**
+ * Spring Security默认是禁用注解的，要想开启注解， 需要在继承WebSecurityConfigurerAdapter,并在类上加@EnableGlobalMethodSecurity注解
+ */
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
@@ -53,7 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/oauth/**").authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll();
+                .formLogin().loginPage("/login").permitAll()
+                .and().logout().logoutUrl("/logout").permitAll();
     }
 
     /**

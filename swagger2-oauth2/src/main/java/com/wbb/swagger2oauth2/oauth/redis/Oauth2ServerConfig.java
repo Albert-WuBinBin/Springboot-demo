@@ -63,13 +63,12 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .withClient("demoClient")
                 .secret(new BCryptPasswordEncoder().encode("demoSecret"))
                 .redirectUris("https://www.baidu.com")
-                .authorizedGrantTypes("authorization_code","client_credentials", "password", "refresh_token")
+                .authorizedGrantTypes("authorization_code","client_credentials", "password", "refresh_token","implicit")
                 .scopes("all")
                 .resourceIds("oauth2-resource")
                 .accessTokenValiditySeconds(60*60)
                 .refreshTokenValiditySeconds(60*60);
     }
-
     /**
      * 用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)。
      * 访问地址：/oauth/token
