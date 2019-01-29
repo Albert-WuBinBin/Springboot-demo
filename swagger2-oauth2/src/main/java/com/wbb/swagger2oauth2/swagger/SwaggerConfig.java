@@ -25,7 +25,6 @@ import static com.google.common.collect.Lists.newArrayList;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private String loggingEndPoint;
 
     private String securitySchemaOAuth2 = "oauth2schema";
     private AuthorizationScope authorizationScopeRead = new AuthorizationScope("read","read");
@@ -78,7 +77,7 @@ public class SwaggerConfig {
         return result;
     }
     private OAuth securitySchema() {
-        LoginEndpoint loginEndpoint = new LoginEndpoint(this.getLoggingEndPoint());
+        LoginEndpoint loginEndpoint = new LoginEndpoint("http://localhost:8888/oauth/authorize");
         GrantType grantType = new ImplicitGrant(loginEndpoint, "access_token");
         return new OAuth(securitySchemaOAuth2, newArrayList(authorizationScopeRead, authorizationScopeWrite), newArrayList(grantType));
     }
@@ -87,7 +86,7 @@ public class SwaggerConfig {
     @Bean
     SecurityConfiguration security() {
         return new SecurityConfiguration(
-                "2247171e1358457bbc180e766b7a7baf",
+                "demoClient",
                 "ignoredButCannotBeNullClientSecret",
                 "myRealm",
                 "swagger",
@@ -95,13 +94,5 @@ public class SwaggerConfig {
                 ApiKeyVehicle.HEADER,
                 "api_key",
                 " " /*scope separator*/);
-    }
-
-    public String getLoggingEndPoint() {
-        return loggingEndPoint;
-    }
-
-    public void setLoggingEndPoint(String loggingEndPoint) {
-        this.loggingEndPoint = loggingEndPoint;
     }
 }

@@ -6,13 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="redisqueue" />
+        <module name="security" />
         <module name="springboot-demo" />
         <module name="swagger2-oauth2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="redisqueue" target="1.8" />
+      <module name="security" target="1.8" />
       <module name="springboot-demo" target="1.5" />
       <module name="swagger2-oauth2" target="1.8" />
     </bytecodeTargetLevel>

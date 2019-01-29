@@ -1,4 +1,4 @@
-package com.wbb.swagger2oauth2.oauth.redis;
+package com.wbb.security.oauth.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;

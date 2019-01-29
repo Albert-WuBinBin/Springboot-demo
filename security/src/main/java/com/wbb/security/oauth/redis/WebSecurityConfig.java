@@ -1,4 +1,4 @@
-package com.wbb.swagger2oauth2.oauth.redis;
+package com.wbb.security.oauth.redis;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +20,11 @@ import org.springframework.security.oauth2.provider.request.DefaultOAuth2Request
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity
 /**
  * Spring Security默认是禁用注解的，要想开启注解， 需要在继承WebSecurityConfigurerAdapter,并在类上加@EnableGlobalMethodSecurity注解
  */
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -50,23 +50,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
-                .loginPage("/login.html")
-                .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/swagger-ui.html")
+        http.csrf().disable();
+        http.requestMatchers().antMatchers("/oauth/**","/login/**","/logout/**")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/login.html","swagger-ui.html").permitAll()
-                .antMatchers("/admin/**").hasRole("ADMIN")          //默认加上前缀ROLE_,目前原因未知
-                .antMatchers("/user/**").hasAnyRole("ADMIN","USER")
-                .antMatchers("/test").authenticated()
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/v2/**").permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable();
-
+                .antMatchers("/oauth/**").authenticated()
+                .and()
+                .formLogin().loginPage("/login").permitAll()
+                .and().logout().logoutUrl("/logout").permitAll();
     }
 
     /**
