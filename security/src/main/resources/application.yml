@@ -19,6 +19,14 @@ spring:
     password: Wbb2018.
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  security:
+    oauth2:
+      client:
+        redirectUris: http://localhost:9999/webjars/springfox-swagger-ui/o2c.html
+        clientId: demoClient
+        clientSecret: demoSecret
+        accessTokenValiditySeconds: 3600
+        refreshTokenValiditySeconds: 3600
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

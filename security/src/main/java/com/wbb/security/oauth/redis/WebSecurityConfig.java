@@ -24,6 +24,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
 @EnableWebSecurity
 /**
  * Spring Security默认是禁用注解的，要想开启注解， 需要在继承WebSecurityConfigurerAdapter,并在类上加@EnableGlobalMethodSecurity注解
+ * 这里使用redis存储token
  */
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -50,14 +51,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable();
-        http.requestMatchers().antMatchers("/oauth/**","/login/**","/logout/**")
-                .and()
-                .authorizeRequests()
-                .antMatchers("/oauth/**").authenticated()
-                .and()
-                .formLogin().loginPage("/login").permitAll()
-                .and().logout().logoutUrl("/logout").permitAll();
+        http.formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/login")
+                .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").permitAll()
+                .and().authorizeRequests()
+//                .and()
+//                .authorizeRequests()
+                .antMatchers("/login.html").permitAll()
+//                .antMatchers("/swagger-ui.html").permitAll()
+//                .antMatchers("/webjars/**").permitAll()
+//                .antMatchers("/swagger-resources/**").permitAll()
+//                .antMatchers("/v2/**").permitAll()
+                .anyRequest().authenticated()
+                .and().csrf().disable();
     }
 
     /**

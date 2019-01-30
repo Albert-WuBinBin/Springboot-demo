@@ -88,7 +88,7 @@ public class SwaggerConfig {
         return new SecurityConfiguration(
                 "demoClient",
                 "ignoredButCannotBeNullClientSecret",
-                "myRealm",
+                "oauth2-resource",//client resourceIds
                 "swagger",
                 "apiKey",
                 ApiKeyVehicle.HEADER,

@@ -1,6 +1,7 @@
 package com.wbb.security.oauth.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,18 +33,6 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private UserApprovalHandler userApprovalHandler;
 
-    /**
-     * 用来配置令牌端点(Token Endpoint)的安全约束.
-     * @param security
-     * @throws Exception
-     */
-    @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
-       security.realm("myRealm")
-               .tokenKeyAccess("permitAll()")
-               .checkTokenAccess("isAuthenticated()")
-               .allowFormAuthenticationForClients();
-    }
 
     /**
      * 用来配置客户端详情服务（ClientDetailsService），客户端详情信息在这里进行初始化，能够把客户端详情信息写死在这里或者是通过数据库来存储调取详情信息。
@@ -52,23 +41,47 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
      * scope：用来限制客户端的访问范围，如果为空（默认）的话，那么客户端拥有全部的访问范围。
      * authorizedGrantTypes：此客户端可以使用的授权类型，默认为空。
      * authorities：此客户端可以使用的权限（基于Spring Security authorities）
-        authorization_code：授权码类型、implicit：隐式授权类型、password：资源所有者（即用户）密码类型、
-        client_credentials：客户端凭据（客户端ID以及Key）类型、refresh_token：通过以上授权获得的刷新令牌来获取新的令牌。
+     authorization_code：授权码类型、implicit：隐式授权类型、password：资源所有者（即用户）密码类型、
+     client_credentials：客户端凭据（客户端ID以及Key）类型、refresh_token：通过以上授权获得的刷新令牌来获取新的令牌。
      * @param clients
      * @throws Exception
      */
+    @Value("${spring.security.oauth2.client.redirectUris}")
+    private String redirectUris;
+    @Value("${spring.security.oauth2.client.clientId}")
+    private String clientId;
+    @Value("${spring.security.oauth2.client.clientSecret}")
+    private String clientSecret;
+    @Value("${spring.security.oauth2.client.accessTokenValiditySeconds}")
+    private int accessTokenValiditySeconds;
+    @Value("${spring.security.oauth2.client.refreshTokenValiditySeconds}")
+    private int refreshTokenValiditySeconds;
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("demoClient")
-                .secret(new BCryptPasswordEncoder().encode("demoSecret"))
-                .redirectUris("https://www.baidu.com")
+                .withClient(clientId)
+                .secret(new BCryptPasswordEncoder().encode(clientSecret))
+                .redirectUris(redirectUris)
                 .authorizedGrantTypes("authorization_code","client_credentials", "password", "refresh_token","implicit")
-                .scopes("all")
-                .resourceIds("myRealm")
-                .accessTokenValiditySeconds(60*60)
-                .refreshTokenValiditySeconds(60*60);
+                .scopes("read","write")
+                .resourceIds("oauth2-resource")
+                .accessTokenValiditySeconds(accessTokenValiditySeconds)
+                .refreshTokenValiditySeconds(refreshTokenValiditySeconds);
     }
+
+    /**
+     * 用来配置令牌端点(Token Endpoint)的安全约束.
+     * @param security
+     * @throws Exception
+     */
+    @Override
+    public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
+       security.realm("oauth2-resource")
+               .tokenKeyAccess("permitAll()")
+               .checkTokenAccess("isAuthenticated()")
+               .allowFormAuthenticationForClients();
+    }
+
     /**
      * 用来配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)。
      * 访问地址：/oauth/token
