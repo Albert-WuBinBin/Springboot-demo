@@ -1,10 +1,10 @@
 spring:
   rabbitmq:
-    host: 127.0.0.1
+    host: localhost
     port: 5672
     username: guest
     password: guest
-    publisher-confirms: true   # ÏûÏ¢·¢ËÍµ½½»»»»úÈ·ÈÏ»úÖÆ,ÊÇ·ñÈ·ÈÏ»Øµ÷
+    publisher-confirms: true #æ¶ˆæ¯å‘é€åˆ°äº¤æ¢æœºç¡®è®¤æœºåˆ¶,æ˜¯å¦ç¡®è®¤å›è°ƒ
     virtual-host: /
 server:
   port: 8080

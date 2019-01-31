@@ -22,9 +22,12 @@ spring:
   security:
     oauth2:
       client:
-        redirectUris: http://localhost:9999/webjars/springfox-swagger-ui/o2c.html
+        redirectUris: http://localhost:9999/webjars/springfox-swagger-ui/o2c.html,http://localhost:9998/webjars/springfox-swagger-ui/o2c.html
         clientId: demoClient
         clientSecret: demoSecret
+        authorizedGrantTypes: authorization_code,client_credentials, password, refresh_token,implicit
+        scopes: read,write
+        resourceIds: oauth2-resource
         accessTokenValiditySeconds: 3600
         refreshTokenValiditySeconds: 3600
 mybatis:

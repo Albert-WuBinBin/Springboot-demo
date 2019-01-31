@@ -56,13 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .and().logout().logoutUrl("/logout").deleteCookies("JSESSIONID").permitAll()
                 .and().authorizeRequests()
-//                .and()
-//                .authorizeRequests()
                 .antMatchers("/login.html").permitAll()
-//                .antMatchers("/swagger-ui.html").permitAll()
-//                .antMatchers("/webjars/**").permitAll()
-//                .antMatchers("/swagger-resources/**").permitAll()
-//                .antMatchers("/v2/**").permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
     }
