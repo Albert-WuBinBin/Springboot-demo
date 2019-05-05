@@ -1,4 +1,4 @@
-package com.wbb.mybatis;
+package com.wbb.mybatis.controller;
 
 import com.wbb.mybatis.bean.User;
 import com.wbb.mybatis.service.UserService;
