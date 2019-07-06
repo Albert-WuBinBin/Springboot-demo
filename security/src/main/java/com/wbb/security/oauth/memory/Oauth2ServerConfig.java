@@ -1,4 +1,4 @@
-package com.wbb.security.oauth.memory;//package com.wbb.swagger2oauth2.oauth.memory;
+package com.wbb.security.oauth.memory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
